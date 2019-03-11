@@ -33,7 +33,7 @@ module.exports = async (page, authData) => {
   });
 
   if (!authResponse) {
-    console.log(chalk.red(`  ∟ Кажется авторизация не удалась, что-то пошло не так`));
+    console.log(chalk.red(`  ∟ Кажется авторизация не удалась, что-то пошло не так ⚝`));
     return false;
   }
 
