@@ -1,25 +1,20 @@
 const puppeteer = require('puppeteer');
-
-const hashTagUri = 'https://www.instagram.com/';
-const username = '89818324892';
-const password = 'popkaass99';
+const options = require('./options.js');
+const auth = require('./auth.js');
+const loop = require('./loop.js');
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch(options.browserOptions);
   const page = await browser.newPage();
-  await page.goto(hashTagUri);
+  const authResponse = await auth(page, options.authData);
 
-  const dimensions = await page.evaluate(() => {
-    return {
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
-      deviceScaleFactor: window.devicePixelRatio
-    };
-  });
+  if (!authResponse) {
+    return await browser.close();
+  }
 
-  await page.screenshot({path: 'example.png'});
+  const loopResponse = await loop(options, page);
 
-  console.log('Dimensions:', dimensions);
-
-  await browser.close();
+  if (!loopResponse) {
+    return await browser.close();
+  }
 })();

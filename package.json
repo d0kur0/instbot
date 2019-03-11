@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/d0kur0/instbot#readme",
   "dependencies": {
+    "chalk": "^2.4.2",
     "puppeteer": "^1.13.0"
   }
 }
