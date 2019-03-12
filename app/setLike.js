@@ -1,12 +1,12 @@
-const chalk = require('chalk');
+const log = require('./consoleLog.js');
 
 module.exports = async (page) => {
   await page.mainFrame().waitForSelector('.dCJp8.afkep.coreSpriteHeartOpen._0mzm-')
     .then(() => {
-      console.log(chalk.blue(`  ∟ Button like successfully rendered ⚝ `));
+      log.info('Button like successfully rendered');
     })
     .catch(() => {
-      console.log(chalk.red(`  ∟ The like button was not render`));
+      log.error('The like button was not render');
     });
 
   let isExists = await page.$eval('.dCJp8.afkep.coreSpriteHeartOpen._0mzm- > span', el => el.classList.contains('glyphsSpriteHeart__filled__24__red_5'));
@@ -14,12 +14,12 @@ module.exports = async (page) => {
   if (!isExists) {
     await page.click('.dCJp8.afkep.coreSpriteHeartOpen._0mzm-')
       .then(() => {
-        console.log(chalk.green(`  ∟ Like successfully put ⚝ `))
+        log.success('Like successfully put');
       })
       .catch(() => {
-        console.log(chalk.red(`  ∟ Failed to like`))
+        log.error('Failed to like');
       });
   } else {
-    console.log(chalk.blue(`  ∟ Like already worth, skip ⚝ `))
+    log.info('Like already worth, skip');
   }
 };

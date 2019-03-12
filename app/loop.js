@@ -1,19 +1,23 @@
 const sleep = require('./sleep.js');
-const chalk = require('chalk');
+const log = require('./consoleLog.js');
 const setLike = require('./setLike');
 const subscribe = require('./subscribe.js');
 
 module.exports = async (options, page) => {
-  console.log(chalk.green(`\r\n➣ The opening page of the hashtag posts...`));
-  await page.goto(options.hashTagUri);
-
-  console.log(chalk.green(`  ∟ Waiting for the render mesh posts`));
-  await page.mainFrame().waitForSelector('.EZdmt')
+  await page.goto(options.hashTagUri)
     .then(() => {
-      console.log(chalk.blue(`  ∟ Posts successfully rendered`))
+      log.header('The opening page of the hashtag posts');
     })
     .catch(() => {
-      console.log(chalk.red(`  ∟ Posts could not rendered`))
+      log.error('Failed to load hashtag page');
+    });
+
+  await page.mainFrame().waitForSelector('.EZdmt')
+    .then(() => {
+      log.success('Posts successfully rendered');
+    })
+    .catch(() => {
+      log.error('Posts could not rendered');
     });
 
   const renderResponse = await page.evaluate((removePopular) => {
@@ -25,7 +29,7 @@ module.exports = async (options, page) => {
   }, options.bot.removePopular);
 
   if (!renderResponse) {
-    console.log(chalk.red(`  ∟ No posts found in DOM ⚝ `));
+    log.error('No posts found in DOM');
     return false;
   }
 
@@ -33,10 +37,10 @@ module.exports = async (options, page) => {
 
     await page.mainFrame().waitForSelector('.v1Nh3.kIKUG._bz0w > a')
       .then(() => {
-        console.log(chalk.blue(`  ∟ Photos were rendering ⚝ `))
+        log.info('Photos were rendering');
       })
       .catch(() => {
-        console.log(chalk.red(`  ∟ Not a single photo doesn't render`))
+        log.error('Not a single photo doesn\'t render');
       });
 
     let postCount = await page.$$('.v1Nh3.kIKUG._bz0w > a');
@@ -46,10 +50,10 @@ module.exports = async (options, page) => {
     while (postCount >= 0) {
       await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.click())
         .then(() => {
-          console.log(chalk.green(`  ∟ Successfully opened the photo (#${iteration}) ⚝ `))
+          log.success(`Successfully opened the photo (#${iteration})`);
         })
         .catch(() => {
-          console.log(chalk.red(`  ∟ Couldn't open the photo (#${iteration})`))
+          log.error(`Couldn't open the photo (#${iteration})`);
         });
 
       if (options.bot.setLike) {
@@ -66,26 +70,26 @@ module.exports = async (options, page) => {
 
       await page.mainFrame().waitForSelector('button.ckWGn')
         .then(() => {
-          console.log(chalk.blue(`  ∟ Found the button to close the photo window`))
+          log.info('Found the button to close the photo window');
         })
         .catch(() => {
-          console.log(chalk.red(`  ∟ Photo window close button not found`))
+          log.error('Photo window close button not found');
         });
 
       await page.click('button.ckWGn')
         .then(() => {
-          console.log(chalk.green(`  ∟ Successfully closed the window photo`))
+          log.success('Successfully closed the window photo');
         })
         .catch(() => {
-          console.log(chalk.red(`  ∟ Failed to close photo window`))
+          log.error('Failed to close photo window');
         });
 
       await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.remove())
         .then(() => {
-          console.log(chalk.green(`  ∟ Successfully deleted the photo element from the DOM ⚝ `))
+          log.success('Successfully deleted the photo element from the DOM');
         })
         .catch(() => {
-          console.log(chalk.red(`  ∟ Unable to remove item from DOM`))
+          log.error('Unable to remove item from DOM');
         });
 
       await sleep(options.bot.beforeIterationDelay);
@@ -95,17 +99,16 @@ module.exports = async (options, page) => {
       if (postCount === iteration) {
         await page.$eval('html', () => window.scrollTo(0, document.body.scrollHeight))
           .then(async () => {
-            console.log(chalk.green(`  ∟ The cycle is over, start a new one ⚝ `))
+            log.success('The cycle is over, start a new one');
           })
           .catch(() => {
-            console.log(chalk.red(`  ∟ Failed to scroll page, new posts not received`))
+            log.error('Failed to scroll page, new posts not received');
           });
 
 
         await recursionLoop();
       }
     }
-
   };
 
   await recursionLoop();
