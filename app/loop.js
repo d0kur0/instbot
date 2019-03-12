@@ -73,8 +73,6 @@ module.exports = async (options, page) => {
         setComment(page);
       }
 
-      await sleep(100000000000);
-
       await sleep(options.bot.delayBeforeComment);
 
       await page.mainFrame().waitForSelector('button.ckWGn')
