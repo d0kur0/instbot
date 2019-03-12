@@ -1,8 +1,8 @@
 module.exports = {
-  hashTagUri: 'https://instagram.com/explore/tags/%D0%BC%D0%B0%D0%BD%D0%B8%D0%BA%D1%8E%D1%80/',
+  hashTagUri: 'https://instagram.com/explore/tags/маникюр/',
 
   authData: {
-    username:'89818324892',
+    username: '89818324892',
     password: 'popkaass99',
   },
 
@@ -15,6 +15,7 @@ module.exports = {
   bot: {
     removePopular: true,
     setLike: true,
-    subscribe: true
+    subscribe: true,
+    delay: 5000
   }
 };
