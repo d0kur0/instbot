@@ -2,6 +2,7 @@ const sleep = require('./sleep.js');
 const log = require('./consoleLog.js');
 const setLike = require('./setLike');
 const subscribe = require('./subscribe.js');
+const setComment = require('./setComment.js');
 
 module.exports = async (options, page) => {
   await page.goto(options.hashTagUri)
@@ -67,6 +68,14 @@ module.exports = async (options, page) => {
       }
 
       await sleep(options.bot.delayBeforeSubscribe);
+
+      if (options.bot.setComment) {
+        setComment(page);
+      }
+
+      await sleep(100000000000);
+
+      await sleep(options.bot.delayBeforeComment);
 
       await page.mainFrame().waitForSelector('button.ckWGn')
         .then(() => {

@@ -16,6 +16,8 @@ module.exports = {
     removePopular: true,
     setLike: true,
     subscribe: true,
+    setComment: true,
+    delayBeforeComment: 5000,
     delayBeforeIteration: 5000,
     delayBeforeLike: 1000,
     delayBeforeSubscribe: 5000
