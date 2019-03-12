@@ -1,10 +1,12 @@
+const chalk = require('chalk');
+
 module.exports = async (page) => {
-  let existsBtn = await page.evaluate(() => document.querySelector('.oW_lN._0mzm-.sqdOP.yWX7d'));
+  let existsBtn = await page.$('div.PQo_0 > div.bY2yH > button');
 
   if (existsBtn) {
-    await page.click('.oW_lN._0mzm-.sqdOP.yWX7d')
+    await page.click('div.PQo_0 > div.bY2yH > button')
       .then(() => {
-        console.log(chalk.blue(`  ∟ Have successfully subscribed`))
+        console.log(chalk.green(`  ∟ Have successfully subscribed`))
       })
       .catch(() => {
         console.log(chalk.red(`  ∟ A subscription button was found but could not be signed`))

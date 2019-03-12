@@ -14,7 +14,7 @@ module.exports = async (page) => {
   if (!isExists) {
     await page.click('.dCJp8.afkep.coreSpriteHeartOpen._0mzm-')
       .then(() => {
-        console.log(chalk.red(`  ∟ Like successfully put ⚝ `))
+        console.log(chalk.green(`  ∟ Like successfully put ⚝ `))
       })
       .catch(() => {
         console.log(chalk.red(`  ∟ Failed to like`))

@@ -9,13 +9,15 @@ module.exports = {
   browserOptions: {
     ignoreHTTPSErrors: true,
     headless: false,
-    args: [`--window-size=1240,1024`]
+    args: [`--window-size=800,600`]
   },
 
   bot: {
     removePopular: true,
     setLike: true,
     subscribe: true,
-    delay: 5000
+    delayBeforeIteration: 5000,
+    delayBeforeLike: 1000,
+    delayBeforeSubscribe: 5000
   }
 };
