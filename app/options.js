@@ -1,5 +1,5 @@
 module.exports = {
-  hashTagUri: 'https://instagram.com/explore/tags/маникюр/',
+  hashTagUri: 'https://instagram.com/explore/tags/nail/',
 
   authData: {
     username: '89818324892',
@@ -18,7 +18,7 @@ module.exports = {
     subscribe: true,
     setComment: true,
     delayBeforeComment: 5000,
-    delayBeforeIteration: 1500,
+    delayBeforeIteration: 15000,
     delayBeforeLike: 1000,
     delayBeforeSubscribe: 5000
   }
