@@ -49,7 +49,7 @@ module.exports = async (options, page) => {
     postCount = postCount.length;
 
     let iteration = 0;
-    while (postCount >= 0) {
+    while (postCount > 0) {
       try {
         await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.click())
           .then(() => {
@@ -71,6 +71,8 @@ module.exports = async (options, page) => {
               await setComment(page);
               await sleep(options.bot.delayBeforeComment);
             }
+          } else {
+            log.error('Like is already, skip the subscription and writing a comment');
           }
         }
 
@@ -98,6 +100,7 @@ module.exports = async (options, page) => {
 
 
           await recursionLoop();
+          postCount = 0;
           break;
         }
       } catch (Exception) {

@@ -1,5 +1,5 @@
 module.exports = {
-  hashTagUri: 'https://instagram.com/explore/tags/nail/',
+  hashTagUri: 'https://instagram.com/explore/tags/маникюр/',
 
   authData: {
     username: '89818324892',
