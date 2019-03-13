@@ -14,10 +14,10 @@ module.exports = async (page) => {
       await page.keyboard.press('Enter');
       await pendingXHR.waitForAllXhrFinished()
         .then(() => {
-          log.info('Waiting for XHR requests to complete');
+          log.info('Ожидание завершения всех XHR запросов');
         });
     })
     .catch(() => {
-      log.error('The input field of the comment is not found');
+      log.error('Не удалось найти поле ввода коментария');
     });
 };

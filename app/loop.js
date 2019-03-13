@@ -8,18 +8,18 @@ const closeRemove = require('./closeRemove.js');
 module.exports = async (options, page) => {
   await page.goto(options.hashTagUri)
     .then(() => {
-      log.header('The opening page of the hashtag posts');
+      log.header('Открытие страницы хештега');
     })
     .catch(() => {
-      log.error('Failed to load hashtag page');
+      log.error('Не удалось открыть страницу хештега');
     });
 
   await page.mainFrame().waitForSelector('.EZdmt')
     .then(() => {
-      log.success('Posts successfully rendered');
+      log.success('Посты успешно отрендерились');
     })
     .catch(() => {
-      log.error('Posts could not rendered');
+      log.error('Рендеринг постов завершился ошибкой');
     });
 
   const renderResponse = await page.evaluate((removePopular) => {
@@ -31,7 +31,7 @@ module.exports = async (options, page) => {
   }, options.bot.removePopular);
 
   if (!renderResponse) {
-    log.error('No posts found in DOM');
+    log.error('Не удалось найти посты в DOM');
     return false;
   }
 
@@ -39,10 +39,10 @@ module.exports = async (options, page) => {
 
     await page.mainFrame().waitForSelector('.v1Nh3.kIKUG._bz0w > a')
       .then(() => {
-        log.info('Photos were rendering');
+        log.success('Кнопка открытия поп-ап поста успешно отрендерена');
       })
       .catch(() => {
-        log.error('Not a single photo doesn\'t render');
+        log.error('Кнопка открытия поп-ап поста не была отрендерена');
       });
 
     let postCount = await page.$$('.v1Nh3.kIKUG._bz0w > a');
@@ -50,13 +50,14 @@ module.exports = async (options, page) => {
 
     let iteration = 0;
     while (postCount > 0) {
+      log.header(`Начало итерации: #${iteration}`);
       try {
         await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.click())
           .then(() => {
-            log.success(`Successfully opened the photo (#${iteration})`);
+            log.success(`Поп-ап поста успешно открыт (#${iteration})`);
           })
           .catch(() => {
-            log.error(`Couldn't open the photo (#${iteration})`);
+            log.error(`Не удалось открыть поп-ап поста (#${iteration})`);
           });
 
         if (options.bot.setLike) {
@@ -72,17 +73,9 @@ module.exports = async (options, page) => {
               await sleep(options.bot.delayBeforeComment);
             }
           } else {
-            log.error('Like is already, skip the subscription and writing a comment');
+            log.error('Лайк уже стоит, пропускаю подписку и написание комментария');
           }
         }
-
-        await page.mainFrame().waitForSelector('button.ckWGn')
-          .then(() => {
-            log.info('Found the button to close the photo window');
-          })
-          .catch(() => {
-            log.error('Photo window close button not found');
-          });
 
         await closeRemove(page);
         await sleep(options.bot.delayBeforeIteration);
@@ -92,10 +85,10 @@ module.exports = async (options, page) => {
         if (postCount === iteration) {
           await page.$eval('html', () => window.scrollTo(0, document.body.scrollHeight))
             .then(async () => {
-              log.success('The cycle is over, start a new one');
+              log.header('Цикл завершился, скролл страницы вниз для загрузки новых постов');
             })
             .catch(() => {
-              log.error('Failed to scroll page, new posts not received');
+              log.error('Не удалось проскроллить страницу для получения новых постов');
             });
 
 

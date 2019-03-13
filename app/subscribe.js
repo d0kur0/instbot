@@ -7,10 +7,10 @@ module.exports = async (page, options) => {
   if (existsBtn) {
     await page.click('div.PQo_0 > div.bY2yH > button')
       .then(() => {
-        log.success('Have successfully subscribed');
+        log.success('Подписка прошла успешно');
       })
       .catch(() => {
-        log.error('A subscription button was found but could not be signed');
+        log.error('Не удалось подписаться');
       });
 
     await sleep(options.bot.delayBeforeSubscribe);
