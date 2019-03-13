@@ -1,4 +1,5 @@
 const log = require('./consoleLog.js');
+const sleep = require('./sleep.js');
 
 module.exports = async (page) => {
   await page.mainFrame().waitForSelector('.dCJp8.afkep.coreSpriteHeartOpen._0mzm-')

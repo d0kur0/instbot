@@ -9,7 +9,7 @@ module.exports = {
   browserOptions: {
     ignoreHTTPSErrors: true,
     headless: false,
-    args: [`--window-size=800,600`]
+    args: [`--window-size=800,800`]
   },
 
   bot: {
@@ -18,7 +18,7 @@ module.exports = {
     subscribe: true,
     setComment: true,
     delayBeforeComment: 5000,
-    delayBeforeIteration: 5000,
+    delayBeforeIteration: 15000,
     delayBeforeLike: 1000,
     delayBeforeSubscribe: 5000
   }

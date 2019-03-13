@@ -7,7 +7,11 @@ module.exports = async (page) => {
       let message = messages[Math.floor(Math.random() * messages.length)];
 
       await page.focus('textarea.Ypffh');
-      await page.keyboard.type(message);
+      await page.keyboard.type(message)
+        .then(() => {
+          log.error('TYPE MESSAGE');
+        });
+
       await page.keyboard.press('Enter');
       await page.waitForRequest(request => request.method() === 'POST');
     })
