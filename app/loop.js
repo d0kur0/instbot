@@ -60,17 +60,18 @@ module.exports = async (options, page) => {
           });
 
         if (options.bot.setLike) {
-          await setLike(page);
-          await sleep(options.bot.delayBeforeLike);
-        }
+          if (await setLike(page)) {
+            await sleep(options.bot.delayBeforeLike);
 
-        if (options.bot.subscribe) {
-          await subscribe(page, options);
-        }
+            if (options.bot.subscribe) {
+              await subscribe(page, options);
+            }
 
-        if (options.bot.setComment) {
-          await setComment(page);
-          await sleep(options.bot.delayBeforeComment);
+            if (options.bot.setComment) {
+              await setComment(page);
+              await sleep(options.bot.delayBeforeComment);
+            }
+          }
         }
 
         await page.mainFrame().waitForSelector('button.ckWGn')
