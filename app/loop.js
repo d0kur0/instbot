@@ -3,6 +3,7 @@ const log = require('./consoleLog.js');
 const setLike = require('./setLike');
 const subscribe = require('./subscribe.js');
 const setComment = require('./setComment.js');
+const closeRemove = require('./closeRemove.js');
 
 module.exports = async (options, page) => {
   await page.goto(options.hashTagUri)
@@ -80,22 +81,7 @@ module.exports = async (options, page) => {
             log.error('Photo window close button not found');
           });
 
-        await page.click('button.ckWGn')
-          .then(() => {
-            log.success('Successfully closed the window photo');
-          })
-          .catch(() => {
-            log.error('Failed to close photo window');
-          });
-
-        await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.remove())
-          .then(() => {
-            log.success('Successfully deleted the photo element from the DOM');
-          })
-          .catch(() => {
-            log.error('Unable to remove item from DOM');
-          });
-
+        await closeRemove(page);
         await sleep(options.bot.beforeIterationDelay);
 
         iteration++;
@@ -116,6 +102,7 @@ module.exports = async (options, page) => {
       } catch (Exception) {
         log.error('Exception! Goto next interation');
         log.error(Exception);
+        await closeRemove(page);
         continue;
       }
     }
