@@ -44,78 +44,73 @@ module.exports = async (options, page) => {
         log.error('Not a single photo doesn\'t render');
       });
 
-    let postCount = await page.$$('.v1Nh3.kIKUG._bz0w > a');
-    postCount = postCount.length;
+    let postExists = await page.$('.v1Nh3.kIKUG._bz0w > a');
 
-    let iteration = 0;
-    while (postCount >= 0) {
-      await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.click())
-        .then(() => {
-          log.success(`Successfully opened the photo (#${iteration})`);
+    if (!postExists) {
+      await page.$eval('html', () => window.scrollTo(0, document.body.scrollHeight))
+        .then(async () => {
+          log.success('The cycle is over, start a new one');
         })
         .catch(() => {
-          log.error(`Couldn't open the photo (#${iteration})`);
+          log.error('Failed to scroll page, new posts not received');
         });
 
-      if (options.bot.setLike) {
-        setLike(page);
-      }
-
-      await sleep(options.bot.delayBeforeLike);
-
-      if (options.bot.subscribe) {
-        subscribe(page);
-      }
-
-      await sleep(options.bot.delayBeforeSubscribe);
-
-      if (options.bot.setComment) {
-        setComment(page);
-      }
-
-      await sleep(options.bot.delayBeforeComment);
-
-      await page.mainFrame().waitForSelector('button.ckWGn')
-        .then(() => {
-          log.info('Found the button to close the photo window');
-        })
-        .catch(() => {
-          log.error('Photo window close button not found');
-        });
-
-      await page.click('button.ckWGn')
-        .then(() => {
-          log.success('Successfully closed the window photo');
-        })
-        .catch(() => {
-          log.error('Failed to close photo window');
-        });
-
-      await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.remove())
-        .then(() => {
-          log.success('Successfully deleted the photo element from the DOM');
-        })
-        .catch(() => {
-          log.error('Unable to remove item from DOM');
-        });
-
-      await sleep(options.bot.beforeIterationDelay);
-
-      iteration++;
-
-      if (postCount === iteration) {
-        await page.$eval('html', () => window.scrollTo(0, document.body.scrollHeight))
-          .then(async () => {
-            log.success('The cycle is over, start a new one');
-          })
-          .catch(() => {
-            log.error('Failed to scroll page, new posts not received');
-          });
-
-
-        await recursionLoop();
-      }
+      return await recursionLoop();
     }
+
+    await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.click())
+      .then(() => {
+        log.success(`Successfully opened the photo`);
+      })
+      .catch(() => {
+        log.error(`Couldn't open the photo`);
+      });
+
+    if (options.bot.setLike) {
+      setLike(page);
+    }
+
+    await sleep(options.bot.delayBeforeLike);
+
+    if (options.bot.subscribe) {
+      subscribe(page);
+    }
+
+    await sleep(options.bot.delayBeforeSubscribe);
+
+    if (options.bot.setComment) {
+      setComment(page);
+    }
+
+    await sleep(options.bot.delayBeforeComment);
+
+    await page.mainFrame().waitForSelector('button.ckWGn')
+      .then(() => {
+        log.info('Found the button to close the photo window');
+      })
+      .catch(() => {
+        log.error('Photo window close button not found');
+      });
+
+    await page.click('button.ckWGn')
+      .then(() => {
+        log.success('Successfully closed the window photo');
+      })
+      .catch(() => {
+        log.error('Failed to close photo window');
+      });
+
+    await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.remove())
+      .then(() => {
+        log.success('Successfully deleted the photo element from the DOM');
+      })
+      .catch(() => {
+        log.error('Unable to remove item from DOM');
+      });
+
+    await sleep(options.bot.beforeIterationDelay);
+
+    return await recursionLoop();
   };
 
   await recursionLoop();
