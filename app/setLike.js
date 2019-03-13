@@ -20,7 +20,10 @@ module.exports = async (page) => {
       .catch(() => {
         log.error('Failed to like');
       });
+
+    return true;
   } else {
     log.info('Like already worth, skip');
+    return false;
   }
 };
