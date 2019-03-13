@@ -18,7 +18,7 @@ module.exports = {
     subscribe: true,
     setComment: true,
     delayBeforeComment: 5000,
-    delayBeforeIteration: 150000,
+    delayBeforeIteration: 1500,
     delayBeforeLike: 1000,
     delayBeforeSubscribe: 5000
   }
