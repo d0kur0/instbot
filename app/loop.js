@@ -100,7 +100,6 @@ module.exports = async (options, page) => {
           break;
         }
       } catch (Exception) {
-        log.error('Exception! Goto next interation');
         log.error(Exception);
         await closeRemove(page);
         continue;
