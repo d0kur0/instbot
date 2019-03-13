@@ -7,13 +7,13 @@ module.exports = async (page) => {
       let message = messages[Math.floor(Math.random() * messages.length)];
 
       await page.focus('textarea.Ypffh');
-      await page.keyboard.type(message)
-        .then(() => {
-          log.error('TYPE MESSAGE');
-        });
+      await page.keyboard.type(message);
 
       await page.keyboard.press('Enter');
-      await page.waitForRequest(request => request.method() === 'POST');
+
+      await page.waitForResponse(response => {
+        return response.request().resourceType() === 'xhr';
+      });
     })
     .catch(() => {
       log.error('The input field of the comment is not found');
