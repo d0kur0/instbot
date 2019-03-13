@@ -82,7 +82,7 @@ module.exports = async (options, page) => {
           });
 
         await closeRemove(page);
-        await sleep(options.bot.beforeIterationDelay);
+        await sleep(options.bot.delayBeforeIterationy);
 
         iteration++;
 
