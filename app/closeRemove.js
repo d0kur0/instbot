@@ -1,3 +1,5 @@
+const log = require('./consoleLog.js');
+
 module.exports = async (page) => {
   await page.click('button.ckWGn')
     .then(() => {
