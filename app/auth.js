@@ -49,15 +49,15 @@ module.exports = async (page, authData) => {
       log.error('Не удалось открыть instagram.com');
     });
 
-  await page.mainFrame().waitForSelector('div.mt3GC > button.aOOlW.HoLwm')
+  await page.mainFrame().waitForSelector('.glyphsSpriteUser__outline__24__grey_9.u-__7')
     .then(() => {
-      log.success('Ожидание появление в DOM дереве элемента с селектором div.mt3GC > button.aOOlW.HoLwm');
+      log.success('Ожидание появление в DOM дереве элемента с селектором .glyphsSpriteUser__outline__24__grey_9.u-__7');
     })
     .catch(() => {
-      log.error('Элемент с селектором div.mt3GC > button.aOOlW.HoLwm не был отрисован');
+      log.error('Элемент с селектором .glyphsSpriteUser__outline__24__grey_9.u-__7 не был отрисован');
     });
 
-  const authResponse = await page.evaluate(() => Boolean(document.querySelector('div.mt3GC > button.aOOlW.HoLwm')));
+  const authResponse = await page.evaluate(() => Boolean(document.querySelector('.glyphsSpriteUser__outline__24__grey_9.u-__7')));
 
   if (!authResponse) {
     log.error('Авторизация не удалась')
