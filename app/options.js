@@ -8,8 +8,13 @@ module.exports = {
 
   browserOptions: {
     ignoreHTTPSErrors: true,
-    headless: false,
-    args: [`--window-size=800,800`]
+    headless: true,
+    args: [
+      '--disable-infobars',
+      '--window-position=0,0',
+      '--ignore-certificate-errors',
+      '--ignore-certificate-errors-spki-list'
+    ]
   },
 
   bot: {
