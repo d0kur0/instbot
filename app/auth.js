@@ -8,7 +8,6 @@ module.exports = async (page, authData) => {
 
   log.info('Ожидание, пока отрисуеются поля формы авторизации');
 
-  // Await username field and filling
   await page.mainFrame().waitForSelector('input[name="username"]')
     .then(async () => {
       log.info('Поле для ввода имени пользователя отрисовано, заполнение');
@@ -20,7 +19,6 @@ module.exports = async (page, authData) => {
       log.error('Поле ввода имени пользователя не отрендерилось');
     });
 
-  // Await password field and filling
   await page.mainFrame().waitForSelector('input[name="password"]')
     .then(async () => {
       log.success('Поле для ввода пароля отрисовано, заполнение');
@@ -53,7 +51,7 @@ module.exports = async (page, authData) => {
 
   await page.mainFrame().waitForSelector('div.mt3GC > button.aOOlW.HoLwm')
     .then(() => {
-      log.success('Ожидание появление в DOM дереве элемента с селектором div.mt3GC > button.aOOlW.HoLwm appeared');
+      log.success('Ожидание появление в DOM дереве элемента с селектором div.mt3GC > button.aOOlW.HoLwm');
     })
     .catch(() => {
       log.error('Элемент с селектором div.mt3GC > button.aOOlW.HoLwm не был отрисован');
