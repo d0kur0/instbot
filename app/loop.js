@@ -1,14 +1,18 @@
-const sleep        = require('./app/modules/sleep');
-const log          = require('./app/modules/consoleLog');
-const setLike      = require('./app/modules/setLike');
-const cleanPost    = require('./app/modules/cleanPost');
-const hashTagState = require('./app/modules/hashTagState');
-const botSettings  = require('./app/configs/botSettings');
+const sleep        = require(`${_app}/modules/sleep`);
+const log          = require(`${_app}/modules/consoleLog`);
+const setLike      = require(`${_app}/modules/setLike`);
+const cleanPost    = require(`${_app}/modules/cleanPost`);
+const timestamp    = require(`${_app}/modules/getTimestamp`);
+const setSubscribe = require(`${_app}/modules/setSubscribe`);
+const setComment   = require(`${_app}/modules/setComment`);
+const botSettings  = require(`${_app}/configs/botSettings`);
+const hashTags     = require(`${_app}/configs/hashTagsList`);
 
-module.exports = async (options, page) => {
+module.exports = async (page) => {
 
   const SELECTOR_POPULAR_POSTS = '.EZdmt';
   const SELECTOR_OPEN_POST     = '.v1Nh3.kIKUG._bz0w > a';
+  const INIT_TIMESTAMP         = timestamp();
 
   const openHashTag = async (hashTag) => {
     await page.goto(`https://www.instagram.com/explore/tags/${hashTag}`)
@@ -32,7 +36,16 @@ module.exports = async (options, page) => {
         document.querySelector(SELECTOR_POPULAR_POSTS).remove();
       }}, botSettings.isRemovePopular, SELECTOR_POPULAR_POSTS);
   };
+
+  await openHashTag(hashTags.getRandomTag());
+
   const recursionLoop = async () => {
+
+    if (INIT_TIMESTAMP + hashTags.changeAfter < timestamp()) {
+      await openHashTag(hashTags.getRandomTag())
+          .then(() => log.success('Обновлён тег для работы'))
+          .catch(() => log.error('Не удалось обновить тег'));
+    }
 
     await page.mainFrame().waitForSelector(SELECTOR_OPEN_POST)
       .then(() => {
@@ -62,21 +75,19 @@ module.exports = async (options, page) => {
           await sleep(botSettings.delayBeforeLike);
 
           if (botSettings.isSubscribe) {
-            const setSubscribe = require('./app/modules/setSubscribe');
             await setSubscribe(page);
           }
 
           if (botSettings.isComment) {
-            const setComment = require('./app/modules/setComment');
             await setComment(page);
-            await sleep(options.bot.delayBeforeComment);
+            await sleep(botSettings.delayBeforeComment);
           }
         } else {
           log.error('Лайк уже стоит, пропускаю подписку и написание комментария');
         }
 
         await cleanPost(page);
-        await sleep(options.bot.delayBeforeIteration);
+        await sleep(botSettings.delayBeforeIteration);
 
         iteration++;
 
@@ -98,9 +109,6 @@ module.exports = async (options, page) => {
         continue;
       }
     }
-  };
-  const mainProcess = async () => {
-
   };
 
   await recursionLoop();

@@ -1,5 +1,5 @@
-const log      = require('./app/modules/consoleLog');
-const authData = require('./app/config/authData');
+const log      = require(`${_app}/modules/consoleLog`);
+const authData = require(`${_app}/configs/authData`);
 
 module.exports = async (page) => {
 

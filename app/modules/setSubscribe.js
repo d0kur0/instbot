@@ -1,4 +1,4 @@
-const log   = require('./app/modules/consoleLog');
+const log = require(`${_app}/modules/consoleLog`);
 
 module.exports = async (page) => {
 

@@ -1,4 +1,4 @@
-const log = require('./app/modules/consoleLog');
+const log = require(`${_app}/modules/consoleLog`);
 
 module.exports = async (page) => {
 
@@ -21,7 +21,7 @@ module.exports = async (page) => {
       log.error('Не удалось закрыть поп-ап поста');
     });
 
-  await page.$eval(SELECTOR_REMOVE_POST', el => el.remove())
+  await page.$eval(SELECTOR_REMOVE_POST, el => el.remove())
     .then(() => {
       log.success('Элемент поста успешно удалён из DOM');
     })
