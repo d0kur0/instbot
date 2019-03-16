@@ -1,6 +1,6 @@
-const log              = require('./app/modules/consoleLog.js');
-const messages         = require('./app/configs/messagesList.js');
-const {pendingRequest} = require('pending-xhr-puppeteer');
+const log                = require(`${_app}/modules/consoleLog`);
+const messages           = require(`${_app}/configs/messagesList`);
+const { PendingXHR }     = require('pending-xhr-puppeteer');
 
 module.exports = async (page) => {
 
@@ -19,16 +19,16 @@ module.exports = async (page) => {
         })
         .catch(() => {
           log.error('Не удалось ввести текст комментария в поле ввода');
-        });;
+        });
 
-      const pendingRequest = new pendingRequest(page);
+      const pendingXHR = new PendingXHR(page);
 
       await page.keyboard.press(KEYCODE_FOR_SEND)
         .then(() => {
           log.success('Эмуляция отправки комментария');
         });
 
-      await pendingRequest.waitForAllXhrFinished()
+      await pendingXHR.waitForAllXhrFinished()
         .then(() => {
           log.info('Все XHR запросы завершены');
         });
