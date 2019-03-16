@@ -8,5 +8,9 @@ module.exports = {
     "ноготочки",
     "nail",
     "nails"
-  ]
+  ],
+
+  getRandomTag () {
+    return this.list[Math.floor(Math.random() * this.list.length)];
+  }
 };
