@@ -1,7 +1,11 @@
-const log = require('./consoleLog.js');
+const log = require(`${_app}/modules/consoleLog`);
 
 module.exports = async (page) => {
-  await page.mainFrame().waitForSelector('button.ckWGn')
+
+  const SELECTOR_CLOSE_POPUP = 'button.ckWGn';
+  const SELECTOR_REMOVE_POST = '.v1Nh3.kIKUG._bz0w > a';
+
+  await page.mainFrame().waitForSelector(SELECTOR_CLOSE_POPUP)
     .then(() => {
       log.info('Найдена кнопка закрытия поп-ап поста');
     })
@@ -9,7 +13,7 @@ module.exports = async (page) => {
       log.error('Не удалось найти кнопку закрытия поп-ап поста');
     });
 
-  await page.click('button.ckWGn')
+  await page.click(SELECTOR_CLOSE_POPUP)
     .then(() => {
       log.success('Поп-ап поста успешно закрыт');
     })
@@ -17,7 +21,7 @@ module.exports = async (page) => {
       log.error('Не удалось закрыть поп-ап поста');
     });
 
-  await page.$eval('.v1Nh3.kIKUG._bz0w > a', el => el.remove())
+  await page.$eval(SELECTOR_REMOVE_POST, el => el.remove())
     .then(() => {
       log.success('Элемент поста успешно удалён из DOM');
     })

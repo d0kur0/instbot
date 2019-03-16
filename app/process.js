@@ -1,25 +1,19 @@
-const puppeteer = require('puppeteer');
-const options = require('./options.js');
-const auth = require('./auth.js');
-const loop = require('./loop.js');
+global._app = `${__dirname}`;
+
+const puppeteer       = require('puppeteer');
+const browserSettings = require(`${_app}/configs/browserSettings`);
+const auth            = require(`${_app}/modules/auth`);
+const loop            = require(`${_app}/loop.js`);
 
 (async () => {
-  const browser = await puppeteer.launch(options.browserOptions);
-  const page = await browser.newPage();
-  await page.setExtraHTTPHeaders({
-    'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
-  });
-  await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36');
+  const browser = await puppeteer.launch(browserSettings);
+  const page    = await browser.newPage();
 
-  const authResponse = await auth(page, options.authData);
-
-  if (!authResponse) {
+  if (!await auth(page)) {
     return await browser.close();
   }
 
-  const loopResponse = await loop(options, page);
-
-  if (!loopResponse) {
+  if (!await loop(page)) {
     return await browser.close();
   }
 })();
