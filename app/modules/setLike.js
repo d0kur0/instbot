@@ -2,8 +2,8 @@ const log = require(`${_app}/modules/consoleLog`);
 
 module.exports = async (page) => {
 
-  const SELECTOR_LIKE_BUTTON       = '.dCJp8.afkep.coreSpriteHeartOpen._0mzm-';
-  const SELECTOR_LIKE_BUTTON_CHILD = '.dCJp8.afkep.coreSpriteHeartOpen._0mzm- > span';
+  const SELECTOR_LIKE_BUTTON       = '.dCJp8.afkep._0mzm-';
+  const SELECTOR_LIKE_BUTTON_CHILD = '.dCJp8.afkep._0mzm- > span';
   const CLASS_IF_LIKE_EXISTS       = 'glyphsSpriteHeart__filled__24__red_5';
 
   await page.mainFrame().waitForSelector(SELECTOR_LIKE_BUTTON)
