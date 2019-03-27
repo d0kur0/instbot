@@ -3,13 +3,13 @@ const authData = require(`${_app}/configs/authData`);
 
 module.exports = async (page) => {
 
-  const SIGNIN_PAGE             = 'https://instagram.com/accounts/login/';
+  const SIGNIN_PAGE             = 'https://www.instagram.com/accounts/login/';
   const SELECTOR_USERNAME_FIELD = 'input[name="username"]';
   const SELECTOR_PASSWORD_FIELD = 'input[name="password"]';
   const SELECTOR_SUBMIT_BUTTON  = 'button[type="submit"]';
   const SELECTOR_CHECK_AUTH     = '.glyphsSpriteUser__outline__24__grey_9.u-__7';
   const REQUEST_SIGNIN_URL      = 'https://www.instagram.com/accounts/login/ajax/';
-  const PAGE_CHECK_AUTH         = 'https://instagram.com';
+  const PAGE_CHECK_AUTH         = 'https://www.instagram.com';
 
   log.header('Начинаю авторизацию...');
   await page.goto(SIGNIN_PAGE);
