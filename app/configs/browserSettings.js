@@ -1,7 +1,7 @@
 module.exports = {
   ignoreHTTPSErrors: true,
-  headless: false,
+  headless: true,
   args: [
-    '--no-sandbox'
+
   ]
 };
