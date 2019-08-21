@@ -42,5 +42,5 @@ npm i
 ## Запуск
 Запуск бота проводится из корня проекта, достаточно выполнить
 ```bash
-npm app/process.js
+node app/process.js
 ```
