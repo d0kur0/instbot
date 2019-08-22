@@ -14,7 +14,7 @@ module.exports = async (page) => {
   log.header('Начинаю авторизацию...');
   await page.goto(SIGNIN_PAGE);
 
-  log.info('Ожидание, пока отрисуеются поля формы авторизации');
+  log.info('Ожидание, пока отрисуются поля формы авторизации');
 
   await page.mainFrame().waitForSelector(SELECTOR_USERNAME_FIELD)
     .then(async () => {
