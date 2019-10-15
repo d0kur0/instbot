@@ -1,15 +1,15 @@
-const log      = require(`${_app}/modules/consoleLog`);
+const log = require(`${_app}/modules/consoleLog`);
 const authData = require(`${_app}/configs/authData`);
+const { PendingXHR } = require('pending-xhr-puppeteer');
 
 module.exports = async (page) => {
 
-  const SIGNIN_PAGE             = 'https://www.instagram.com/accounts/login/';
-  const SELECTOR_USERNAME_FIELD = 'input[name="username"]';
-  const SELECTOR_PASSWORD_FIELD = 'input[name="password"]';
-  const SELECTOR_SUBMIT_BUTTON  = 'button[type="submit"]';
-  const SELECTOR_CHECK_AUTH     = '.glyphsSpriteUser__outline__24__grey_9.u-__7';
-  const REQUEST_SIGNIN_URL      = 'https://www.instagram.com/accounts/login/ajax/';
-  const PAGE_CHECK_AUTH         = 'https://www.instagram.com';
+  const SIGNIN_PAGE                 = 'https://www.instagram.com/accounts/login/';
+  const SELECTOR_USERNAME_FIELD     = 'input[name="username"]';
+  const SELECTOR_PASSWORD_FIELD     = 'input[name="password"]';
+  const SELECTOR_SUBMIT_BUTTON      = 'button[type="submit"]';
+  const SELECTOR_CHECK_AUTH         = 'svg[aria-label="Profile"]';
+  const CANCEL_NOTIFICATIONS_BUTTON = '.aOOlW.HoLwm';
 
   log.header('Начинаю авторизацию...');
   await page.goto(SIGNIN_PAGE);
@@ -38,6 +38,8 @@ module.exports = async (page) => {
       log.error('Поле ввода пароля не отрендерилось');
     });
 
+  const pendingXHR = new PendingXHR(page);
+
   await page.click(SELECTOR_SUBMIT_BUTTON)
     .then(() => {
       log.success('Поля заполнены, отправка формы');
@@ -46,19 +48,32 @@ module.exports = async (page) => {
       log.error('Произошла ошибка отправки формы авторизации');
     });
 
-  await page.waitForResponse(REQUEST_SIGNIN_URL);
-
-  await page.goto(PAGE_CHECK_AUTH)
+  await pendingXHR.waitForAllXhrFinished()
     .then(() => {
-      log.success(`Открытие "${PAGE_CHECK_AUTH}" для проверки авторизации`);
-    })
-    .catch(() => {
-      log.error(`Не удалось открыть "${PAGE_CHECK_AUTH}"`);
+      log.info('Все XHR запросы завершены');
     });
+
+  await page.waitForNavigation();
+
+  const isOpenNotifications = await page.evaluate((s) => Boolean(document.querySelector(s)), CANCEL_NOTIFICATIONS_BUTTON);
+
+  if (isOpenNotifications) {
+    log.info('Обнаружено окно с push-уведомлениями, отклоняем');
+
+    await page.click(CANCEL_NOTIFICATIONS_BUTTON)
+      .then(() => {
+        log.success('Успешно отклонили');
+      })
+      .catch(() => {
+        log.error(`Неудалось кликнуть на "${CANCEL_NOTIFICATIONS_BUTTON}"`);
+      });
+  }
+
+  log.info(`Ожидание появление в DOM дереве элемента с селектором: "${SELECTOR_CHECK_AUTH}"`);
 
   await page.mainFrame().waitForSelector(SELECTOR_CHECK_AUTH)
     .then(() => {
-      log.success(`Ожидание появление в DOM дереве элемента с селектором: "${SELECTOR_CHECK_AUTH}"`);
+      log.success(`Элемент с селектором "${SELECTOR_CHECK_AUTH}" отрисован`);
     })
     .catch(() => {
       log.error(`Элемент с селектором "${SELECTOR_CHECK_AUTH}" не был отрисован`);
