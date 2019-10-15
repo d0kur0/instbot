@@ -1,7 +1,8 @@
 module.exports = {
   ignoreHTTPSErrors: true,
-  headless: true,
+  headless: false,
   args: [
-
+    '--disable-notification',
+    '--no-sandbox'
   ]
 };
