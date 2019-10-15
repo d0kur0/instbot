@@ -1,6 +1,6 @@
-const log                = require(`${_app}/modules/consoleLog`);
-const messages           = require(`${_app}/configs/messagesList`);
-const { PendingXHR }     = require('pending-xhr-puppeteer');
+const log = require(`${_app}/modules/consoleLog`);
+const messages = require(`${_app}/configs/messagesList`);
+const { PendingXHR } = require('pending-xhr-puppeteer');
 
 module.exports = async (page) => {
 
