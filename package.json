@@ -2,9 +2,9 @@
   "name": "instbot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app/process.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./app/process.js"
   },
   "repository": {
     "type": "git",
