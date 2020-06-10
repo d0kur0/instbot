@@ -11,7 +11,7 @@ module.exports = async page => {
 
   if (existsBtn) {
     const todaySubscribes = await limiter.getField("subscribes");
-    if (todaySubscribes >= botSettings.maxCommentsPeerDay) {
+    if (todaySubscribes >= botSettings.maxSubscribesPeerDay) {
       log.error("Лимит подписок на сегодня исчерпан");
       return false;
     }
