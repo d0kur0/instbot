@@ -1,35 +1,49 @@
 const log = require(`${_app}/modules/consoleLog`);
+const limiter = require(`${_app}/modules/limiter.js`);
+const botSettings = require(`${_app}/configs/botSettings.js`);
 
-module.exports = async (page) => {
+module.exports = async page => {
+  const SELECTOR_LIKE_BUTTON = ".ltpMr.Slqrh > .fr66n > .wpO6b";
+  const SELECTOR_LIKE_BUTTON_CHILD = `${SELECTOR_LIKE_BUTTON} > svg`;
 
-  const SELECTOR_LIKE_BUTTON       = '.dCJp8.afkep';
-  const SELECTOR_LIKE_BUTTON_CHILD = '.dCJp8.afkep > span';
-  const CLASS_IF_LIKE_EXISTS       = 'glyphsSpriteHeart__filled__24__red_5';
-
-  await page.mainFrame().waitForSelector(SELECTOR_LIKE_BUTTON)
+  await page
+    .mainFrame()
+    .waitForSelector(SELECTOR_LIKE_BUTTON)
     .then(() => {
-      log.info('Кнопка лайка успешно отрендерилась');
+      log.info("Кнопка лайка успешно отрендерилась");
     })
     .catch(() => {
-      log.error('Рендеринг кнопки лайка завершился ошибкой');
+      log.error("Рендеринг кнопки лайка завершился ошибкой");
     });
 
-  let likeExists = await page.$eval(SELECTOR_LIKE_BUTTON_CHILD, (el, CLASS_IF_LIKE_EXISTS) => {
-    el.classList.contains(CLASS_IF_LIKE_EXISTS)
-  }, CLASS_IF_LIKE_EXISTS);
+  let likeExists = await page.evaluate(s => {
+    const svgElement = document.querySelector(s);
+    if (!svgElement) return false;
+
+    return svgElement.getAttribute("fill") === "#ed4956";
+  }, SELECTOR_LIKE_BUTTON_CHILD);
 
   if (!likeExists) {
-    await page.click(SELECTOR_LIKE_BUTTON)
+    const todayLikes = await limiter.getField("likes");
+    if (todayLikes >= botSettings.maxLikesPeerDay) {
+      log.error("Лимит лайков на сегодня исчерпан");
+      return false;
+    }
+
+    await limiter.incrementField("likes");
+
+    await page
+      .click(SELECTOR_LIKE_BUTTON)
       .then(() => {
-        log.success('Лайк успешно поставлен');
+        log.success("Лайк успешно поставлен");
       })
       .catch(() => {
-        log.error('Не удалось поставить лайк');
+        log.error("Не удалось поставить лайк");
       });
 
     return true;
   } else {
-    log.info('Лайк уже стоит, пропуск');
+    log.info("Лайк уже стоит, пропуск");
     return false;
   }
 };
