@@ -7,7 +7,8 @@ module.exports = async page => {
   const SELECTOR_USERNAME_FIELD = 'input[name="username"]';
   const SELECTOR_PASSWORD_FIELD = 'input[name="password"]';
   const SELECTOR_SUBMIT_BUTTON = 'button[type="submit"]';
-  const SELECTOR_CHECK_AUTH = "nav.NXc7H.jLuN9 span._2dbep.qNELH > img";
+  const SELECTOR_CHECK_AUTH =
+    "#react-root > section > nav > div._8MQSO.Cx7Bp > div > div > div.ctQZg > div > div:nth-child(5) > a > img";
   const CANCEL_NOTIFICATIONS_BUTTON =
     "body > div.RnEpo.Yx5HN > div > div > div > div.mt3GC > button.aOOlW.HoLwm";
   const SAVE_AUTH_SELECTOR =
