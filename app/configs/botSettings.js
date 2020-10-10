@@ -5,10 +5,10 @@ module.exports = {
   isComment: true,
 
   // Delays
-  delayBeforeComment: 60000,
-  delayBeforeIteration: 60000,
-  delayBeforeLike: 60000,
-  delayBeforeSubscribe: 60000,
+  delayBeforeComment: 5000,
+  delayBeforeIteration: 5000,
+  delayBeforeLike: 5000,
+  delayBeforeSubscribe: 5000,
 
   // Limits
   maxLikesPeerDay: 180,

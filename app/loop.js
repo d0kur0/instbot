@@ -15,7 +15,7 @@ module.exports = async (page) => {
   const INIT_TIMESTAMP         = timestamp();
 
   const openHashTag = async (hashTag) => {
-    await page.goto(`https://www.instagram.com/explore/tags/${hashTag}`)
+    await page.goto(`https://www.instagram.com/explore/${hashTag}`)
         .then(() => {
           log.header('Открытие страницы хештега');
         })
