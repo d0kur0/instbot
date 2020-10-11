@@ -1,0 +1,16 @@
+{
+  "isRemovePopular": true,
+  "isSubscribe": true,
+  "isComment": true,
+
+  "delayBeforeComment": 5000,
+  "delayBeforeIteration": 5000,
+  "delayBeforeLike": 5000,
+  "delayBeforeSubscribe": 5000,
+
+  "maxLikesPeerDay": 180,
+  "maxSubscribesPeerDay": 90,
+  "maxCommentsPeerDay": 190,
+
+  "changeAfter": 1800
+}
