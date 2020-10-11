@@ -4,7 +4,7 @@
   "description": "",
   "main": "app/process.js",
   "scripts": {
-    "start": "cross-env INST_USERNAME=USERNAME INST_PASSWORD=password node ./app/process.js"
+    "start": "node ./app/process.js"
   },
   "repository": {
     "type": "git",

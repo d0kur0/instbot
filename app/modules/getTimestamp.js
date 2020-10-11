@@ -1,1 +1,1 @@
-module.exports = () => Date.now() / 1000 | 0;
+module.exports = () => (Date.now() / 1000) | 0;
