@@ -1,10 +1,11 @@
 {
+  "type": "module",
   "name": "instbot",
   "version": "1.0.0",
   "description": "",
-  "main": "app/process.js",
+  "main": "app/index.js",
   "scripts": {
-    "start": "node ./app/process.js"
+    "start": "node ./app/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   "homepage": "https://github.com/d0kur0/instbot#readme",
   "dependencies": {
     "chalk": "^2.4.2",
-    "cross-env": "^7.0.2",
+    "lodash.sample": "^4.2.1",
+    "lowdb": "^1.0.0",
     "pending-xhr-puppeteer": "^1.0.17",
     "prettier": "^2.0.5",
     "puppeteer": "^1.13.0"
