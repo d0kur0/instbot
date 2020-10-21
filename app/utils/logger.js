@@ -19,6 +19,7 @@ const injectLogMessages = async logs => {
           overflow-y: scroll;
           z-index: 99999;
           padding: 15px;
+          pointer-events: none;
         }
         
         .log-message {
