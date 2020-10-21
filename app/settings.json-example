@@ -27,7 +27,8 @@
 
   "browser": {
     "headless": false,
-    "args": ["--disable-notification", "--no-sandbox", "--window-size=1366,1024"]
+    "args": ["--disable-notification", "--no-sandbox", "--window-size=1366,1024"],
+    "defaultViewport": null
   },
 
   "sourcesList": ["locations/430301404", "tags/nails"],
