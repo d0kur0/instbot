@@ -22,7 +22,7 @@
   "dayLimit": {
     "likes": 180,
     "comments": 180,
-    "Subscribes": 180
+    "subscribes": 180
   },
 
   "browser": {
