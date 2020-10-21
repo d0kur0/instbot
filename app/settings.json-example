@@ -11,7 +11,7 @@
     "isWriteComment": true
   },
 
-  "delay": {
+  "delays": {
     "afterWriteComment": 5000,
     "afterClickLike": 5000,
     "afterClickSubscribe": 5000,
@@ -19,7 +19,7 @@
     "afterChangeSource": 36000
   },
 
-  "dayLimit": {
+  "dayLimits": {
     "likes": 180,
     "comments": 180,
     "subscribes": 180
