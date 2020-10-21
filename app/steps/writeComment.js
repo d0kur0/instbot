@@ -7,6 +7,10 @@ import { PendingXHR } from "pending-xhr-puppeteer";
 import sample from "lodash.sample";
 
 const writeComment = async () => {
+  if (!settings.bot.isWriteComment) {
+    return await writeInfo("Комментарии выключены в конфигурации, пропускаем операцию");
+  }
+
   if (await limitsManager.isLimitsReached("comments")) {
     return await writeInfo("Лимит комментариев на сегодня исчерпан, пропускаем операцию");
   }

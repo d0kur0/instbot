@@ -5,6 +5,10 @@ import limitsManager from "../utils/limitsManager.js";
 import settings from "../settings.json";
 
 const clickLike = async () => {
+  if (!settings.bot.isClickLike) {
+    return await writeInfo("Лайки выключены в конфигурации, пропускаем операцию");
+  }
+
   if (await limitsManager.isLimitsReached("likes")) {
     return await writeInfo("Лимит лайков на сегодня исчерпан, пропускаем операцию");
   }
