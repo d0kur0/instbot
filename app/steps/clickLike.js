@@ -3,6 +3,7 @@ import browserInstance from "../browserInstance.js";
 import { SELECTOR_LIKE_BUTTON, SELECTOR_LIKE_BUTTON_CHILD } from "../assets/selectors.js";
 import limitsManager from "../utils/limitsManager.js";
 import settings from "../settings.json";
+import sleep from "../utils/sleep.js";
 
 const clickLike = async () => {
   if (!settings.bot.isClickLike) {
@@ -26,6 +27,7 @@ const clickLike = async () => {
   isLikeExists ? await writeInfo("Лайк уже стоит, пропускаем") : await writeSuccess("Лайк успешно поставлен");
 
   await limitsManager.increment("likes");
+  await sleep(settings.delays.afterClickLike);
 };
 
 export default clickLike;

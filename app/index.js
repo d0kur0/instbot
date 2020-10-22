@@ -33,13 +33,8 @@ const process = async () => {
     await openPost();
 
     await clickLike();
-    await sleep(settings.delays.afterClickLike);
-
     await clickSubscribe();
-    await sleep(settings.delays.afterClickSubscribe);
-
     await writeComment();
-    await sleep(settings.delays.afterWriteComment);
 
     await removeUselessPost();
     (await getPostsCount()) || (await scrollToBottom());

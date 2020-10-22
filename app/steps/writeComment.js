@@ -5,6 +5,7 @@ import { SELECTOR_COMMENT_FIELD } from "../assets/selectors.js";
 import settings from "../settings.json";
 import { PendingXHR } from "pending-xhr-puppeteer";
 import sample from "lodash.sample";
+import sleep from "../utils/sleep.js";
 
 const writeComment = async () => {
   if (!settings.bot.isWriteComment) {
@@ -30,6 +31,7 @@ const writeComment = async () => {
   await writeInfo("Комментарий отправлен");
 
   await limitsManager.increment("comments");
+  await sleep(settings.delays.afterWriteComment);
 };
 
 export default writeComment;
