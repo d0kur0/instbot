@@ -1,0 +1,37 @@
+{
+  "auth": {
+    "username": "",
+    "password": ""
+  },
+
+  "bot": {
+    "isRemovePopular": true,
+    "isClickLike": true,
+    "isClickSubscribe": true,
+    "isWriteComment": true
+  },
+
+  "delays": {
+    "afterWriteComment": 5000,
+    "afterClickLike": 5000,
+    "afterClickSubscribe": 5000,
+    "afterEndIteration": 5000,
+    "afterChangeSource": 36000
+  },
+
+  "dayLimits": {
+    "likes": 180,
+    "comments": 180,
+    "subscribes": 180
+  },
+
+  "browser": {
+    "headless": false,
+    "args": ["--disable-notification", "--no-sandbox", "--window-size=1366,1024"],
+    "defaultViewport": null
+  },
+
+  "sourcesList": ["locations/430301404", "tags/nails"],
+
+  "commentsList": ["Awesome! <3 ☺☺☺", "Красиво! ☺☺☺"]
+}
