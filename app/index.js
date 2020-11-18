@@ -32,9 +32,9 @@ const process = async () => {
 
     await openPost();
 
-    await clickLike();
-    await clickSubscribe();
-    await writeComment();
+    await clickLike().catch(() => writeError("Ошибка установки лайка"));
+    await clickSubscribe().catch(() => writeError("Ошибка установки подписки"));
+    await writeComment().catch(() => writeError("Ошибка написания комментария"));
 
     await removeUselessPost();
     (await getPostsCount()) || (await scrollToBottom());
