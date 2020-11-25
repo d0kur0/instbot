@@ -50,6 +50,4 @@ try {
   await process();
 } catch (error) {
   await writeError(error.message);
-} finally {
-  browserInstance.self.close();
 }
