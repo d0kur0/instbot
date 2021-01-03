@@ -5,7 +5,7 @@
   "description": "",
   "main": "app/index.js",
   "scripts": {
-    "start": "node ./app/index.js"
+    "start": "node --experimental-json-modules ./app/index.js --unsubscribe"
   },
   "repository": {
     "type": "git",
