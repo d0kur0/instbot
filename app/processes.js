@@ -13,7 +13,6 @@ import scrollToBottom from "./steps/scrollToBottom.js";
 import sleep from "./utils/sleep.js";
 import openProfile from "./steps/openProfile.js";
 import openSubscribes from "./steps/openSubscribes.js";
-import scrollSubscribes from "./steps/scrollSubscribes.js";
 import unsubscribe from "./steps/usubscribe.js";
 
 let lastIterationChange = getTimeStamp();
