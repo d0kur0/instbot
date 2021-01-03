@@ -12,12 +12,12 @@
   },
 
   "delays": {
-    "afterWriteComment": 5000,
-    "afterClickLike": 5000,
-    "afterClickSubscribe": 5000,
-    "afterEndIteration": 5000,
-    "afterChangeSource": 36000,
-    "afterUnsubscribe": 5000
+    "afterWriteComment": 5,
+    "afterClickLike": 5,
+    "afterClickSubscribe": 5,
+    "afterEndIteration": 5,
+    "afterChangeSource": 360,
+    "afterUnsubscribe": 5
   },
 
   "dayLimits": {
