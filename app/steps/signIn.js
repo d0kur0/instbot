@@ -44,7 +44,9 @@ const auth = async () => {
     await browserInstance.page.click(SELECTOR_SAVE_AUTH);
   }
 
-  await browserInstance.page.mainFrame().waitForSelector(SELECTOR_CANCEL_NOTIFICATIONS_BUTTON);
+  await browserInstance.page
+    .mainFrame()
+    .waitForSelector(SELECTOR_CANCEL_NOTIFICATIONS_BUTTON);
   const isExistsNotificationsRequest = await browserInstance.page.evaluate(
     selector => Boolean(document.querySelector(selector)),
     SELECTOR_CANCEL_NOTIFICATIONS_BUTTON
@@ -55,7 +57,9 @@ const auth = async () => {
     await browserInstance.page.click(SELECTOR_CANCEL_NOTIFICATIONS_BUTTON);
   }
 
-  await writeInfo(`Ожидание появление в DOM дереве элемента с селектором: "${SELECTOR_CHECK_AUTH}"`);
+  await writeInfo(
+    `Ожидание появление в DOM дереве элемента с селектором: "${SELECTOR_CHECK_AUTH}"`
+  );
   await browserInstance.page.mainFrame().waitForSelector(SELECTOR_CHECK_AUTH);
   const isExistsOnlyAuthElement = await browserInstance.page.evaluate(
     selector => Boolean(document.querySelector(selector)),

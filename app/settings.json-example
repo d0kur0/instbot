@@ -16,13 +16,15 @@
     "afterClickLike": 5000,
     "afterClickSubscribe": 5000,
     "afterEndIteration": 5000,
-    "afterChangeSource": 36000
+    "afterChangeSource": 36000,
+    "afterUnsubscribe": 5000
   },
 
   "dayLimits": {
     "likes": 180,
     "comments": 180,
-    "subscribes": 180
+    "subscribes": 180,
+    "unsubscribes": 100,
   },
 
   "browser": {
