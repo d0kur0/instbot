@@ -19,6 +19,7 @@ const makeLimitManager = async () => {
       likes: [],
       subscribes: [],
       comments: [],
+      unsubscribes: [],
     })
     .write();
 
@@ -37,8 +38,8 @@ const makeLimitManager = async () => {
     },
 
     async isLimitsReached(field) {
-      const settedValue = await this.getCount(field);
-      return settedValue >= settings.dayLimits[field];
+      const currentValue = await this.getCount(field);
+      return currentValue >= settings.dayLimits[field];
     },
   };
 };
