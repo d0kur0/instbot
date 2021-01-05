@@ -4,7 +4,7 @@ import settings from "./settings.json";
 import openSource from "./steps/openSource.js";
 import openPost from "./steps/openPost.js";
 import clickLike from "./steps/clickLike.js";
-import { writeError } from "./utils/logger.js";
+import { writeError, writeInfo } from "./utils/logger.js";
 import clickSubscribe from "./steps/clickSubscribe.js";
 import writeComment from "./steps/writeComment.js";
 import removeUselessPost from "./steps/removeUselessPost.js";
@@ -14,6 +14,7 @@ import sleep from "./utils/sleep.js";
 import openProfile from "./steps/openProfile.js";
 import openSubscribes from "./steps/openSubscribes.js";
 import unsubscribe from "./steps/usubscribe.js";
+import limitsManager from "./utils/limitsManager.js";
 
 let lastIterationChange = getTimeStamp();
 let currentSource = sample(settings.sourcesList);
@@ -52,6 +53,11 @@ export const unsubscribeProcess = async () => {
   await openSubscribes();
 
   while (true) {
+    if (await limitsManager.isLimitsReached("unsubscribes")) {
+      await writeInfo("Лимит отписок на сегодня исчерпан, остановка бота");
+      break;
+    }
+
     await unsubscribe();
     await sleep(settings.delays.afterUnsubscribe);
   }
