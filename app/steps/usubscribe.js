@@ -5,6 +5,7 @@ import {
   SELECTOR_SUBSCRIBES_LIST_ITEM,
 } from "../assets/selectors.js";
 import { writeInfo, writeSuccess } from "../utils/logger.js";
+import limitsManager from "../utils/limitsManager.js";
 
 const unsubscribe = async () => {
   await writeInfo("Эмуляция клика по отписке");
@@ -21,6 +22,7 @@ const unsubscribe = async () => {
     firstListItem && firstListItem.remove();
   }, SELECTOR_SUBSCRIBES_LIST_ITEM);
   await writeSuccess("Элемент удалён");
+  await limitsManager.increment("unsubscribes");
 };
 
 export default unsubscribe;
