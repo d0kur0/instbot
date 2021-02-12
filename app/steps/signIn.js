@@ -33,7 +33,11 @@ const auth = async () => {
   await writeTitle("Проверка авторизации");
   await browserInstance.page.waitForNavigation();
 
-  await browserInstance.page.mainFrame().waitForSelector(SELECTOR_SAVE_AUTH);
+  await browserInstance.page
+    .mainFrame()
+    .waitForSelector(SELECTOR_SAVE_AUTH, { timeout: 5000 })
+    .catch(() => {}); // Ignore error with out try-catch.
+
   const isExistsSaveAuthRequest = await browserInstance.page.evaluate(
     selector => Boolean(document.querySelector(selector)),
     SELECTOR_SAVE_AUTH
