@@ -23,3 +23,4 @@ export const SELECTOR_OPEN_SUBSCRIBES =
 export const SELECTOR_SUBSCRIBES_LIST_ITEM = `body > div.RnEpo.Yx5HN > div > div > div.isgrP > ul > div > li:nth-child(1)`;
 export const SELECTOR_SUBSCRIBES_ITEM_BUTTON = `ul.jSC57._6xe7A button.sqdOP.L3NKy._8A5w5[type="button"]`;
 export const SELECTOR_SUBSCRIBES_CANCEL_BUTTON = `div > div > div > div.mt3GC > button.aOOlW.-Cab_`;
+export const SELECTOR_SUSPEND_SIGN_IN = `#react-root > section > div > div > div.GNbi9 > div > p`;
