@@ -1,4 +1,4 @@
-import { writeInfo, writeSuccess, writeTitle } from "../utils/logger.js";
+import { writeError, writeInfo, writeSuccess, writeTitle } from "../utils/logger.js";
 import settings from "../settings.json";
 import { PendingXHR } from "pending-xhr-puppeteer";
 import browserInstance from "../browserInstance.js";
@@ -8,8 +8,11 @@ import {
   SELECTOR_PASSWORD_FIELD,
   SELECTOR_SAVE_AUTH,
   SELECTOR_SUBMIT_AUTH_BUTTON,
+  SELECTOR_SUSPEND_SIGN_IN,
   SELECTOR_USERNAME_FIELD,
 } from "../assets/selectors.js";
+import isExistSuspendWindow from "./isExistSuspendWindow.js";
+import sleep from "../utils/sleep.js";
 
 const singInURL = "https://www.instagram.com/accounts/login/";
 
@@ -35,8 +38,29 @@ const auth = async () => {
 
   await browserInstance.page
     .mainFrame()
+    .waitForSelector(SELECTOR_SUSPEND_SIGN_IN, { timeout: 5000 })
+    .catch(() => {});
+
+  const isExistsSuspendWindow = await isExistSuspendWindow();
+
+  if (isExistsSuspendWindow) {
+    await writeError(
+      "Обнаружено окно `подозрительного входа`, ожидаем заполнения (пауза в 1 минуту)"
+    );
+
+    while (true) {
+      await sleep(1000);
+
+      if (!(await isExistSuspendWindow())) {
+        break;
+      }
+    }
+  }
+
+  await browserInstance.page
+    .mainFrame()
     .waitForSelector(SELECTOR_SAVE_AUTH, { timeout: 5000 })
-    .catch(() => {}); // Ignore error with out try-catch.
+    .catch(() => {});
 
   const isExistsSaveAuthRequest = await browserInstance.page.evaluate(
     selector => Boolean(document.querySelector(selector)),
@@ -51,6 +75,7 @@ const auth = async () => {
   await browserInstance.page
     .mainFrame()
     .waitForSelector(SELECTOR_CANCEL_NOTIFICATIONS_BUTTON);
+
   const isExistsNotificationsRequest = await browserInstance.page.evaluate(
     selector => Boolean(document.querySelector(selector)),
     SELECTOR_CANCEL_NOTIFICATIONS_BUTTON
