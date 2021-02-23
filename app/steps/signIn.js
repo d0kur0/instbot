@@ -37,25 +37,9 @@ const auth = async () => {
 
   await sleep(5);
 
-  while (await isExistsSuspendWindow()) {
+  while (await isExistSuspendWindow()) {
     await writeInfo("Требуется подтверждение авторизации, ожидание 10s");
     await sleep(10);
-  }
-
-  const isExistsSuspendWindow = await isExistSuspendWindow();
-
-  if (isExistsSuspendWindow) {
-    await writeError(
-      "Обнаружено окно `подозрительного входа`, ожидаем заполнения (пауза в 1 минуту)"
-    );
-
-    while (true) {
-      await sleep(1000);
-
-      if (!(await isExistSuspendWindow())) {
-        break;
-      }
-    }
   }
 
   await browserInstance.page
