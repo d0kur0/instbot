@@ -8,7 +8,6 @@ import {
   SELECTOR_PASSWORD_FIELD,
   SELECTOR_SAVE_AUTH,
   SELECTOR_SUBMIT_AUTH_BUTTON,
-  SELECTOR_SUSPEND_SIGN_IN,
   SELECTOR_USERNAME_FIELD,
 } from "../assets/selectors.js";
 import isExistSuspendWindow from "./isExistSuspendWindow.js";
@@ -36,10 +35,12 @@ const auth = async () => {
   await writeTitle("Проверка авторизации");
   await browserInstance.page.waitForNavigation();
 
-  await browserInstance.page
-    .mainFrame()
-    .waitForSelector(SELECTOR_SUSPEND_SIGN_IN, { timeout: 5000 })
-    .catch(() => {});
+  await sleep(5);
+
+  while (await isExistsSuspendWindow()) {
+    await writeInfo("Требуется подтверждение авторизации, ожидание 10s");
+    await sleep(10);
+  }
 
   const isExistsSuspendWindow = await isExistSuspendWindow();
 
