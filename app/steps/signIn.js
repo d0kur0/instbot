@@ -1,4 +1,4 @@
-import { writeError, writeInfo, writeSuccess, writeTitle } from "../utils/logger.js";
+import { writeInfo, writeSuccess, writeTitle } from "../utils/logger.js";
 import settings from "../settings.json";
 import { PendingXHR } from "pending-xhr-puppeteer";
 import browserInstance from "../browserInstance.js";
