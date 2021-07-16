@@ -7,10 +7,14 @@ const [, , mode] = process.argv;
 try {
   await auth();
 
-  if (mode === "--unsubscribe") {
-    await unsubscribeProcess();
-  } else {
-    await defaultProcess();
+  switch (mode) {
+    case "--unsubscribe":
+      await unsubscribeProcess();
+      break;
+      
+    default:
+      await defaultProcess();
+      break;
   }
 } catch (error) {
   await writeError(error.message);
